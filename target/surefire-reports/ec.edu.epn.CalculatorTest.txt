@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ec.edu.epn.CalculatorTest
+-------------------------------------------------------------------------------
+Tests run: 35, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.779 s -- in ec.edu.epn.CalculatorTest
