@@ -13,13 +13,11 @@ public class CalculatorTest {
 
     private Calculator calculator;
 
-    // Configuración: Inicializa el objeto antes de cada prueba.
     @BeforeEach
     void setup() {
         calculator = new Calculator();
     }
 
-    // Limpieza: Asegura que el objeto es null después de cada prueba.
     @AfterEach
     void tearDown() {
         calculator = null;
@@ -67,6 +65,25 @@ public class CalculatorTest {
         assertEquals(expected, calculator.multiply(a, b));
     }
 
+    // --- NUEVA PRUEBA DE DIVISIÓN CON assertAll ---
+    @Test
+    void divide_DosNumerosPositivos_retornaCocienteCorrecto() {
+        // Arrange
+        int a = 10;
+        int b = 2;
+
+        // Act
+        double result = calculator.divide(a, b);
+
+        // Assert: Uso de assertAll para múltiples verificaciones simultáneas
+        assertAll(
+            // El cociente debería ser 5.0
+            () -> assertEquals(5.0, result, "El cociente debería ser 5.0"),
+            // El resultado debe ser positivo
+            () -> assertTrue(result > 0, "El resultado debe ser positivo")
+        );
+    }
+    
     // --- Pruebas de División (Parametrizadas) ---
     @ParameterizedTest
     @CsvSource({
@@ -75,17 +92,15 @@ public class CalculatorTest {
         "9, 3, 3.0",
         "-10, 2, -5.0",
         "15, 4, 3.75",
-        "0, 5, 0.0" // Cero dividido por un número
+        "0, 5, 0.0" 
     })
     void divide_MultipleValues_ReturnsCorrectQuotient(int a, int b, double expected) {
-        // Se usa un delta (tolerancia) para comparar resultados de punto flotante.
         assertEquals(expected, calculator.divide(a, b), 0.0001); 
     }
 
     // --- Prueba de Excepción de División por Cero ---
     @Test
     void divide_DivideByZero_ThrowsIllegalArgumentException() {
-        // Se usa assertThrows para verificar que se lanza la excepción correcta.
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             calculator.divide(5, 0);
         });
